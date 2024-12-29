@@ -14,6 +14,7 @@ class WagonMapper
     public function fromRequest(WagonRequest $coasterRequest): Wagon
     {
         return new Wagon(
+            id: null,
             seats: $coasterRequest->ilosc_miejsc,
             speed: $coasterRequest->predkosc_wagonu,
         );
