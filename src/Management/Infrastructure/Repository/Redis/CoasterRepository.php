@@ -23,9 +23,24 @@ readonly class CoasterRepository implements CoasterRepositoryInterface
     {
     }
 
+    public function get(Coaster $coaster): ?Coaster
+    {
+        $data = $this->cache->get(
+            $this->createKey($coaster),
+            function (ItemInterface $item): void {
+            }
+        );
+
+        if (empty($data)) {
+            return null;
+        }
+
+        return $this->mapper->fromRedis($data);
+    }
+
     public function store(Coaster $coaster): void
     {
-        $coaster->id = Uuid::fromString(Uuid::NAMESPACE_OID)->toString();
+        $coaster->id = Uuid::v4()->toString();
 
         $this->cache->get(
             $this->createKey($coaster),
@@ -37,8 +52,10 @@ readonly class CoasterRepository implements CoasterRepositoryInterface
 
     public function update(Coaster $coaster): void
     {
-        $this->cache->get(
-            $this->createKey($coaster),
+        $key = $this->createKey($coaster);
+
+        $this->cache->delete($key);
+        $this->cache->get($key,
             function (ItemInterface $item) use ($coaster): string {
                 return $this->mapper->toRedis($coaster);
             }
@@ -47,6 +64,10 @@ readonly class CoasterRepository implements CoasterRepositoryInterface
 
     private function createKey(Coaster $coaster): string
     {
+        if (empty($coaster->id)) {
+            throw new \Exception('coaster id cannot be empty');
+        }
+
         return sprintf(static::KEY_TEMPLATE, $coaster->id);
     }
 }

@@ -1,0 +1,125 @@
+{
+	"info": {
+		"_postman_id": "4a3f7208-2779-4e96-b05f-dbb47c1bce5f",
+		"name": "Coasters API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28058595"
+	},
+	"item": [
+		{
+			"name": "Coasters",
+			"item": [
+				{
+					"name": "Add coaster",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"liczba_personelu\": 16,\n    \"liczba_klientow\": 60000,\n    \"dl_trasy\": 1800,\n    \"godziny_od\": \"08:00\",\n    \"godziny_do\": \"16:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost/api/coasters",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"coasters"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update coaster",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"liczba_personelu\": 160,\n    \"liczba_klientow\": 60000,\n    \"godziny_od\": \"08:00\",\n    \"godziny_do\": \"16:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost/api/coasters/6ba7b812-9dad-11d1-80b4-00c04fd430c8",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"coasters",
+								"6ba7b812-9dad-11d1-80b4-00c04fd430c8"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Wagons",
+			"item": [
+				{
+					"name": "Add wagon",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"ilosc_miejsc\": 160,\n    \"predkosc_wagonu\": 1.2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost/api/coasters/6ba7b812-9dad-11d1-80b4-00c04fd430c8/wagons",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"coasters",
+								"6ba7b812-9dad-11d1-80b4-00c04fd430c8",
+								"wagons"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete wagon",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost/api/coasters/6ba7b812-9dad-11d1-80b4-00c04fd430c8/wagons/f0d88a8f-6e6c-4e7f-9889-12852e69fa10",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"coasters",
+								"6ba7b812-9dad-11d1-80b4-00c04fd430c8",
+								"wagons",
+								"f0d88a8f-6e6c-4e7f-9889-12852e69fa10"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

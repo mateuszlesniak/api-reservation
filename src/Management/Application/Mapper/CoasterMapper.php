@@ -31,4 +31,18 @@ class CoasterMapper
     {
         return json_encode($coaster->toArray(), JSON_THROW_ON_ERROR);
     }
+
+    public function fromRedis(string $data): Coaster
+    {
+        $data = json_decode($data, true);
+
+        return new Coaster(
+            id: $data['id'],
+            staffCount: $data['staffCount'],
+            customerCount: $data['customerCount'],
+            length: $data['length'],
+            hoursFrom: DateTime::createFromFormat('H:i', $data['hoursFrom']),
+            hoursTo: DateTime::createFromFormat('H:i', $data['hoursTo']),
+        );
+    }
 }

@@ -23,9 +23,24 @@ readonly class WagonRepository implements WagonRepositoryInterface
     {
     }
 
+    public function get(Wagon $wagon): ?Wagon
+    {
+        $data = $this->cache->get(
+            $this->createKey($wagon),
+            function (ItemInterface $item): void {
+            }
+        );
+
+        if (empty($data)) {
+            return null;
+        }
+
+        return $this->mapper->fromRedis($data);
+    }
+
     public function store(Wagon $wagon): void
     {
-        $wagon->id = Uuid::fromString(Uuid::NAMESPACE_OID)->toString();
+        $wagon->id = Uuid::v4()->toString();
 
         $this->cache->get(
             $this->createKey($wagon),
@@ -42,6 +57,10 @@ readonly class WagonRepository implements WagonRepositoryInterface
 
     private function createKey(Wagon $wagon): string
     {
+        if (empty($wagon->id) || empty($wagon->coasterId)) {
+            throw new \Exception('Wagon id and CoasterId must not be empty');
+        }
+
         return sprintf(static::KEY_TEMPLATE, $wagon->coasterId, $wagon->id);
     }
 }

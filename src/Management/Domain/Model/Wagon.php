@@ -11,9 +11,9 @@ class Wagon extends AggregateRoot
 {
     public function __construct(
         public ?string $id,
-        public string $coasterId,
-        public readonly int $seats,
-        public readonly float $speed,
+        public ?string $coasterId,
+        public readonly ?int $seats,
+        public readonly ?float $speed,
     )
     {
     }

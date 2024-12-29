@@ -9,6 +9,8 @@ use App\Management\Domain\Model\Coaster;
 
 interface CoasterRepository
 {
+    public function get(Coaster $coaster): ?Coaster;
+
     public function store(Coaster $coaster): void;
 
     public function update(Coaster $coaster): void;

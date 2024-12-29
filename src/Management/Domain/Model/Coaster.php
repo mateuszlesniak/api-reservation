@@ -12,11 +12,11 @@ class Coaster extends AggregateRoot
 {
     public function __construct(
         public ?string $id,
-        public readonly int $staffCount,
-        public readonly int $customerCount,
+        public ?int $staffCount,
+        public ?int $customerCount,
         public readonly ?int $length,
-        public readonly DateTime $hoursFrom,
-        public readonly DateTime $hoursTo,
+        public ?DateTime $hoursFrom,
+        public ?DateTime $hoursTo,
     )
     {
     }

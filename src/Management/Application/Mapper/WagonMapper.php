@@ -25,4 +25,16 @@ class WagonMapper
     {
         return json_encode($wagon->toArray(), JSON_THROW_ON_ERROR);
     }
+
+    public function fromRedis(string $data): Wagon
+    {
+        $data = json_decode($data, true);
+
+        return new Wagon(
+            id: $data['id'],
+            coasterId: $data['coaster_id'],
+            seats: $data['seats'],
+            speed: $data['speed'],
+        );
+    }
 }
