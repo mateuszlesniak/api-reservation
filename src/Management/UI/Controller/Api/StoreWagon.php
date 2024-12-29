@@ -34,6 +34,7 @@ class StoreWagon extends AbstractController
         format: 'json'
     )]
     public function __invoke(
+        string $coasterId,
         #[MapRequestPayload(
             acceptFormat: 'json',
             validationGroups: ['store_wagons'],
@@ -41,7 +42,7 @@ class StoreWagon extends AbstractController
         )] WagonRequest $wagonRequest
     ): JsonResponse
     {
-        $wagon = $this->wagonMapper->fromRequest($wagonRequest);
+        $wagon = $this->wagonMapper->fromRequest($wagonRequest, $coasterId);
 
         $this->bus->dispatch(new StoreWagonCommand($wagon));
 

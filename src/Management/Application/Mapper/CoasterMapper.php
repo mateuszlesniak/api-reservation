@@ -7,19 +7,20 @@ namespace App\Management\Application\Mapper;
 
 use App\Management\Domain\Model\Coaster;
 use App\Management\Infrastructure\Dto\CoasterRequest;
+use DateTime;
 use JsonException;
 
 class CoasterMapper
 {
-    public function fromRequest(CoasterRequest $coasterRequest, ?int $coasterId = null): Coaster
+    public function fromRequest(CoasterRequest $coasterRequest, ?string $coasterId = null): Coaster
     {
         return new Coaster(
-            id: $coasterId ?? null,
+            id: $coasterId,
             staffCount: $coasterRequest->liczba_personelu,
             customerCount: $coasterRequest->liczba_klientow,
-            length: $coasterRequest->dl_trasy ?? null,
-            hoursFrom: $coasterRequest->godziny_od,
-            hoursTo: $coasterRequest->godziny_do,
+            length: $coasterRequest->dl_trasy,
+            hoursFrom: DateTime::createFromFormat('H:i', $coasterRequest->godziny_od),
+            hoursTo: DateTime::createFromFormat('H:i', $coasterRequest->godziny_do),
         );
     }
 

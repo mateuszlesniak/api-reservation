@@ -31,7 +31,7 @@ class UpdateCoaster extends AbstractController
         format: 'json'
     )]
     public function __invoke(
-        int $coasterId,
+        string $coasterId,
         #[MapRequestPayload(
             acceptFormat: 'json',
             validationGroups: ['update_coasters'],

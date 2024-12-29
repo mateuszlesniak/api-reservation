@@ -14,7 +14,7 @@ use Symfony\Contracts\Cache\ItemInterface;
 
 readonly class CoasterRepository implements CoasterRepositoryInterface
 {
-    private const string KEY_TEMPLATE = 'coaster_%d';
+    private const string KEY_TEMPLATE = 'coaster_%s';
 
     public function __construct(
         private CoasterMapper $mapper,
@@ -30,8 +30,6 @@ readonly class CoasterRepository implements CoasterRepositoryInterface
         $this->cache->get(
             $this->createKey($coaster),
             function (ItemInterface $item) use ($coaster): string {
-                $item->expiresAfter(0);
-
                 return $this->mapper->toRedis($coaster);
             }
         );
@@ -39,7 +37,12 @@ readonly class CoasterRepository implements CoasterRepositoryInterface
 
     public function update(Coaster $coaster): void
     {
-        // TODO: Implement update() method.
+        $this->cache->get(
+            $this->createKey($coaster),
+            function (ItemInterface $item) use ($coaster): string {
+                return $this->mapper->toRedis($coaster);
+            }
+        );
     }
 
     private function createKey(Coaster $coaster): string

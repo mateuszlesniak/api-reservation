@@ -11,5 +11,5 @@ interface WagonRepository
 {
     public function store(Wagon $wagon): void;
 
-    public function delete(int $wagonId): void;
+    public function delete(Wagon $wagon): void;
 }

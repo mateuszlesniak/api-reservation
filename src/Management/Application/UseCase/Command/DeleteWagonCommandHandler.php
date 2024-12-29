@@ -18,7 +18,7 @@ readonly class DeleteWagonCommandHandler
 
     public function __invoke(StoreWagonCommand $storeWagonCommand): void
     {
-        $this->wagonRepository->store($storeWagonCommand->wagon);
+        $this->wagonRepository->delete();
     }
 
 }

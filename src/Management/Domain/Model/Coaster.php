@@ -6,6 +6,7 @@ declare(strict_types=1);
 namespace App\Management\Domain\Model;
 
 use App\Common\Domain\Model\AggregateRoot;
+use DateTime;
 
 class Coaster extends AggregateRoot
 {
@@ -14,8 +15,8 @@ class Coaster extends AggregateRoot
         public readonly int $staffCount,
         public readonly int $customerCount,
         public readonly ?int $length,
-        public readonly string $hoursFrom,
-        public readonly string $hoursTo,
+        public readonly DateTime $hoursFrom,
+        public readonly DateTime $hoursTo,
     )
     {
     }
@@ -27,8 +28,8 @@ class Coaster extends AggregateRoot
             'staffCount' => $this->staffCount,
             'customerCount' => $this->customerCount,
             'length' => $this->length,
-            'hoursFrom' => $this->hoursFrom,
-            'hoursTo' => $this->hoursTo,
+            'hoursFrom' => $this->hoursFrom->format('H:i'),
+            'hoursTo' => $this->hoursTo->format('H:i'),
         ];
     }
 

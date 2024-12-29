@@ -7,8 +7,8 @@ namespace App\Management\Application\UseCase\Command;
 readonly class DeleteWagonCommand
 {
     public function __construct(
-        public int $coasterId,
-        public int $wagonId,
+        public string $coasterId,
+        public string $wagonId,
     )
     {
     }
