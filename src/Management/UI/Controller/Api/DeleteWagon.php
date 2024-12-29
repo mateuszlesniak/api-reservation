@@ -33,7 +33,11 @@ class DeleteWagon extends AbstractController
     )]
     public function __invoke(string $coasterId, string $wagonId): JsonResponse
     {
-        $this->bus->dispatch(new DeleteWagonCommand($coasterId, $wagonId));
+        try {
+            $this->bus->dispatch(new DeleteWagonCommand($coasterId, $wagonId));
+        } catch (\Exception $exception) {
+            return $this->json($exception->getMessage(), Response::HTTP_BAD_REQUEST);
+        }
 
         return $this->json([], Response::HTTP_NO_CONTENT);
     }

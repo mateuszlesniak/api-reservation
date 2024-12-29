@@ -38,9 +38,13 @@ class StoreCoaster extends AbstractController
         )] CoasterRequest $coasterRequest
     ): JsonResponse
     {
-        $coaster = $this->coasterMapper->fromRequest($coasterRequest);
+        try {
+            $coaster = $this->coasterMapper->fromRequest($coasterRequest);
 
-        $this->bus->dispatch(new StoreCoasterCommand($coaster));
+            $this->bus->dispatch(new StoreCoasterCommand($coaster));
+        } catch (\Exception $exception) {
+            return $this->json($exception->getMessage(), Response::HTTP_BAD_REQUEST);
+        }
 
         return $this->json(null, Response::HTTP_CREATED);
     }

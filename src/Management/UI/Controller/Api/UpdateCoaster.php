@@ -39,9 +39,13 @@ class UpdateCoaster extends AbstractController
         )] CoasterRequest $coasterRequest
     ): JsonResponse
     {
-        $coaster = $this->coasterMapper->fromRequest($coasterRequest, $coasterId);
+        try {
+            $coaster = $this->coasterMapper->fromRequest($coasterRequest, $coasterId);
 
-        $this->bus->dispatch(new UpdateCoasterCommand($coaster));
+            $this->bus->dispatch(new UpdateCoasterCommand($coaster));
+        } catch (\Exception $exception) {
+            return $this->json($exception->getMessage(), Response::HTTP_BAD_REQUEST);
+        }
 
         return $this->json(null, Response::HTTP_OK);
     }

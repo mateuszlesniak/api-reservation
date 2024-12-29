@@ -42,9 +42,13 @@ class StoreWagon extends AbstractController
         )] WagonRequest $wagonRequest
     ): JsonResponse
     {
-        $wagon = $this->wagonMapper->fromRequest($wagonRequest, $coasterId);
+        try {
+            $wagon = $this->wagonMapper->fromRequest($wagonRequest, $coasterId);
 
-        $this->bus->dispatch(new StoreWagonCommand($wagon));
+            $this->bus->dispatch(new StoreWagonCommand($wagon));
+        } catch (\Exception $exception) {
+            return $this->json($exception->getMessage(), Response::HTTP_BAD_REQUEST);
+        }
 
         return $this->json(null, Response::HTTP_CREATED);
     }
